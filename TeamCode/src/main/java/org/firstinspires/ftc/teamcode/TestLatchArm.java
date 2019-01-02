@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp
+//@TeleOp
 public class TestLatchArm extends LinearOpMode {
     //DrivingLibrary drivingLibrary;
     DcMotor latchArm;
@@ -23,7 +23,7 @@ public class TestLatchArm extends LinearOpMode {
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        latchArm.setPower(.75);
+        //latchArm.setPower(.75);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -39,16 +39,13 @@ public class TestLatchArm extends LinearOpMode {
             }*/
 
             if (gamepad1.dpad_up) {
-                latchArm.setPower(1);
+                latchArm.setPower(-1);
             } else if (gamepad1.dpad_down) {
-                latchArm.setPower(.3);
+                latchArm.setPower(.5);
             } else {
                 latchArm.setPower(0);
             }
 
-            if (gamepad1.dpad_right) {
-                latchArm.setPower(-.75);
-            }
 
            /* drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);*/

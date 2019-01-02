@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-//@TeleOp
-public class TestWinchServo extends LinearOpMode {
+@TeleOp
+public class TestIntakeArm extends LinearOpMode {
     CRServo intakeSpinServo;
     Servo intakeFlipServo;
     Servo intakeExtendArm;
@@ -23,8 +23,6 @@ public class TestWinchServo extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
-
 
         waitForStart();
 
@@ -42,9 +40,9 @@ public class TestWinchServo extends LinearOpMode {
             }
 
             // extend intake arm (winch servo)
-             if (gamepad2.dpad_right) {
+            if (gamepad2.dpad_right) {
                 intakeExtendArm.setPosition(.7);
-             } else if (gamepad2.dpad_left) {
+            } else if (gamepad2.dpad_left) {
                 intakeExtendArm.setPosition(.2);
             }
 

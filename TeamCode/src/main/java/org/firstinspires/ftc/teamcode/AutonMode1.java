@@ -33,21 +33,20 @@ public class AutonMode1 extends LinearOpMode {
         while (opModeIsActive()) {
             if (run) {
                 // land
-                latchArm.setPower(-.75);
-                sleep(5000);
+                latchArm.setPower(.75);
+                sleep(7000);
 
                 // strafe to the side
-                drivingLibrary.driveStraight(-.5f, 0);
+                drivingLibrary.driveStraight(.5f, 0);
 
                 // reset landing arm
-                latchArm.setPower(.75);
+                latchArm.setPower(-.75);
+                sleep(5000);
 
                 // knock off yellow jewel - 25?
 
 
-
                 // place marker - 15?
-
 
 
 
@@ -55,7 +54,6 @@ public class AutonMode1 extends LinearOpMode {
                 telemetry.update();
                 run = false;
             }
-            sleep(1000);
             telemetry.addData("auton off", "yes");
             telemetry.update();
         }

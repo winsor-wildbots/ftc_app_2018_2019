@@ -11,11 +11,12 @@ import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @TeleOp
 public class TeleOpMode2Edited extends LinearOpMode {
+
     // initialize all our individual variables
     DrivingLibrary drivingLibrary;
     int drivingMode;
     DcMotor latchArm;
-    CRServo intakeServo;
+    CRServo intakeSpinServo;
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
@@ -27,23 +28,26 @@ public class TeleOpMode2Edited extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
-        // intake cr servo
-        intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
+        // intake cr servo: rev hub 1 servo port 0
+        intakeSpinServo = hardwareMap.get(CRServo.class, "intakeSpinServo");
 
-        // intake flip servo
+        // intake flip servo: rev hub 1 servo port 1
         intakeFlipServo = hardwareMap.get(Servo.class, "intakeFlipServo");
 
-        // intake arm extending winch servo
-        intakeExtendArm = hardwareMap.get(Servo.class, "winchServo");
+        // intake arm extending winch servo: rev hub 1 servo port 2
+        intakeExtendArm = hardwareMap.get(Servo.class, "intakeExtendArm");
 
-        // intake arm rotational dc motor
+        // intake arm rotational dc motor: rev hub 1 motor port 1
         intakeRotateArm = hardwareMap.get(DcMotor.class, "intakeRotateArm");
 
-        // latch motor
+        // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        boolean holdA = false;
+        boolean holdB = false;
 
         waitForStart();
 
@@ -63,23 +67,18 @@ public class TeleOpMode2Edited extends LinearOpMode {
 
             // control latch arm
             if (gamepad1.dpad_up) {
-                latchArm.setPower(.75);
+                latchArm.setPower(-1);
             } else if (gamepad1.dpad_down) {
-                latchArm.setPower(-.75);
+                latchArm.setPower(1);
+            } else if (gamepad1.dpad_right) {
+                latchArm.setPower(-.5);
+            } else if (gamepad1.dpad_left) {
+                latchArm.setPower(.5);
             } else {
                 latchArm.setPower(0);
             }
 
             // gamepad 2: intake and intake arm
-
-            // spinning intake servo
-            if (gamepad2.a) {
-                intakeServo.setPower(1);
-            } else if (gamepad2.b) {
-                intakeServo.setPower(-1);
-            } else {
-                intakeServo.setPower(0);
-            }
 
             // extend intake arm (winch servo)
             if (gamepad2.dpad_right) {
@@ -97,8 +96,36 @@ public class TeleOpMode2Edited extends LinearOpMode {
                 intakeRotateArm.setPower(0);
             }
 
-            // flip servo
-            /* TODO: write code */
+            // spinning intake servo
+            if (gamepad2.a) {
+                if (holdA) {
+                    intakeSpinServo.setPower(0);
+                    holdA = false;
+                    holdB = false;
+                } else {
+                    intakeSpinServo.setPower(1);
+                    holdA = true;
+                    holdB = false;
+                }
+
+            } else if (gamepad2.b) {
+                if (holdB) {
+                    intakeSpinServo.setPower(0);
+                    holdB = false;
+                    holdA = false;
+                } else {
+                    intakeSpinServo.setPower(-1);
+                    holdB = true;
+                    holdA = false;
+                }
+            }
+
+            // flip servo - play with these values
+            if (gamepad2.y) {
+                intakeFlipServo.setPosition(.55);
+            } else if (gamepad2.x) {
+                intakeFlipServo.setPosition(.4);
+            }
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
