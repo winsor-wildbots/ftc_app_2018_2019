@@ -9,13 +9,17 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-//@TeleOp
-public class TeleOpMode2Edited extends LinearOpMode {
+@TeleOp
+public class TeleOpOfficial extends LinearOpMode {
 
-    // initialize all our individual variables
+    // drive train
     DrivingLibrary drivingLibrary;
     int drivingMode;
+
+    // latch arm
     DcMotor latchArm;
+
+    // intake arm
     CRServo intakeSpinServo;
     Servo intakeFlipServo;
     Servo intakeExtendArm;
@@ -106,7 +110,7 @@ public class TeleOpMode2Edited extends LinearOpMode {
                     holdA = false;
                     holdB = false;
                 } else {
-                    intakeSpinServo.setPower(1);
+                    intakeSpinServo.setPower(.9);
                     holdA = true;
                     holdB = false;
                 }
@@ -117,7 +121,7 @@ public class TeleOpMode2Edited extends LinearOpMode {
                     holdB = false;
                     holdA = false;
                 } else {
-                    intakeSpinServo.setPower(-1);
+                    intakeSpinServo.setPower(-.9);
                     holdB = true;
                     holdA = false;
                 }

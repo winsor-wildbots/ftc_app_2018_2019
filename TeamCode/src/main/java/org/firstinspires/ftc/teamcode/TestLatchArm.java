@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-//@TeleOp
+@TeleOp
 public class TestLatchArm extends LinearOpMode {
     //DrivingLibrary drivingLibrary;
     DcMotor latchArm;
@@ -45,7 +45,6 @@ public class TestLatchArm extends LinearOpMode {
             } else {
                 latchArm.setPower(0);
             }
-
 
            /* drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);*/
