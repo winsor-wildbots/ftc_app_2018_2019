@@ -24,7 +24,7 @@ public class TestWinchServo extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-
+        intakeExtendArm.setPosition(.2);
 
         waitForStart();
 
@@ -33,13 +33,13 @@ public class TestWinchServo extends LinearOpMode {
             // extend, rotate arm, flip box, rotate intake hand
 
             // spinning intake servo
-            if (gamepad2.a) {
+            /*if (gamepad2.a) {
                 intakeSpinServo.setPower(1);
             } else if (gamepad2.b) {
                 intakeSpinServo.setPower(-1);
             } else {
                 intakeSpinServo.setPower(0);
-            }
+            }*/
 
             // extend intake arm (winch servo)
              if (gamepad2.dpad_right) {
@@ -48,6 +48,20 @@ public class TestWinchServo extends LinearOpMode {
                 intakeExtendArm.setPosition(.2);
             }
 
+            double currentPosition = intakeExtendArm.getPosition();
+
+            if (gamepad2.a) {
+                 intakeExtendArm.setPosition(currentPosition+.01);
+                 currentPosition = currentPosition+.01;
+            }
+            if (gamepad2.b) {
+                 intakeExtendArm.setPosition(currentPosition-.01);
+                 currentPosition = currentPosition-.01;
+            }
+
+
+
+            /*
             // rotate intake arm (motor)
             if (gamepad2.dpad_up) {
                 intakeRotateArm.setPower(1);
@@ -55,16 +69,18 @@ public class TestWinchServo extends LinearOpMode {
                 intakeRotateArm.setPower(-1);
             } else {
                 intakeRotateArm.setPower(0);
-            }
+            }*/
 
-            // flip servo
+            /*// flip servo
             if (gamepad2.x) {
                 intakeFlipServo.setPosition(.6);
             } else if (gamepad2.y) {
                 intakeFlipServo.setPosition(.3);
-            }
+            }*/
+
 
             telemetry.addData("Status", "Running");
+            telemetry.addData("pos winch servo", currentPosition);
             telemetry.update();
         }
     }
