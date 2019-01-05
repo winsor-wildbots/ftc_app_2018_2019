@@ -60,7 +60,11 @@ public class TeleOpOfficial extends LinearOpMode {
         boolean holdA = false;
         boolean holdB = false;
 
+
+
         waitForStart();
+
+        drawerStopServo.setPosition(0.9);
 
         while (opModeIsActive()) {
             // game pad 1: driving and latch
@@ -75,6 +79,13 @@ public class TeleOpOfficial extends LinearOpMode {
             // drive straight
             drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);
+
+            // drawer stop off
+            if (gamepad1.y) {
+                drawerStopServo.setPosition(.9);
+            } else if (gamepad1.x) {
+                drawerStopServo.setPosition(.39);
+            }
 
             // control latch arm
             if (gamepad1.dpad_up) {
@@ -134,9 +145,9 @@ public class TeleOpOfficial extends LinearOpMode {
 
             // flip servo - play with these values
             if (gamepad2.y) {
-                intakeFlipServo.setPosition(.55);
+                intakeFlipServo.setPosition(.1);
             } else if (gamepad2.x) {
-                intakeFlipServo.setPosition(.4);
+                intakeFlipServo.setPosition(.3);
             }
 
             telemetry.addData("Status", "Running");

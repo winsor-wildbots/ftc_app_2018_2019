@@ -22,6 +22,7 @@ public class AutonLand extends LinearOpMode {
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
+    Servo drawerStopServo;
 
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
@@ -44,10 +45,14 @@ public class AutonLand extends LinearOpMode {
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
+        drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
+
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         boolean ranOnce = false;
+
+        drawerStopServo.setPosition(0.9);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -59,9 +64,15 @@ public class AutonLand extends LinearOpMode {
                 sleep(7000);
                 latchArm.setPower(0);
 
+                drivingLibrary.driveStraight(0.75f, 0);
+                sleep(500);
+                drivingLibrary.floatStop();
+
                 //reset arm
                 latchArm.setPower(-.75);
                 sleep(5000);
+
+                drawerStopServo.setPosition(0.39);
 
 
             }

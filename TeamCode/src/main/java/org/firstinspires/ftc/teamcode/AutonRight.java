@@ -53,6 +53,8 @@ public class AutonRight extends LinearOpMode {
 
         boolean ranOnce = false;
 
+        drawerStopServo.setPosition(0.9);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -64,7 +66,7 @@ public class AutonRight extends LinearOpMode {
                 latchArm.setPower(0);
 
                 drivingLibrary.driveStraight(0.75f, 0);
-                sleep(1500);
+                sleep(500);
                 drivingLibrary.floatStop();
 
                 //reset arm
@@ -77,7 +79,7 @@ public class AutonRight extends LinearOpMode {
                 drivingLibrary.brakeStop();
 
                 //drop of marker
-                drawerStopServo.setPosition(0.5);
+                drawerStopServo.setPosition(0.39);
                 intakeExtendArm.setPosition(.7);
                 intakeFlipServo.setPosition(.55);
 

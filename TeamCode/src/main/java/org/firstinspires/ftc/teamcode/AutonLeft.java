@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
+@Autonomous
 public class AutonLeft extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
@@ -53,6 +55,8 @@ public class AutonLeft extends LinearOpMode {
 
         boolean landed = false;
 
+        drawerStopServo.setPosition(0.9);
+
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -63,7 +67,7 @@ public class AutonLeft extends LinearOpMode {
                 latchArm.setPower(0);
 
                 drivingLibrary.driveStraight(0.75f, 0);
-                sleep(1500);
+                sleep(500);
                 drivingLibrary.floatStop();
 
                 //reset arm
@@ -86,7 +90,7 @@ public class AutonLeft extends LinearOpMode {
 
         drivingLibrary.brakeStop();
         intakeRotateArm.setPower(0);
-        drawerStopServo.setPosition(0.5);
+        drawerStopServo.setPosition(0.39);
         intakeExtendArm.setPosition(0.5);
     }
 
