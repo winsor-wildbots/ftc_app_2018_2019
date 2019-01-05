@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous
-public class AutonOfficial extends LinearOpMode {
+public class AutonRight extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
     int drivingMode;
@@ -22,6 +22,7 @@ public class AutonOfficial extends LinearOpMode {
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
+    Servo drawerStopServo;
 
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
@@ -44,6 +45,9 @@ public class AutonOfficial extends LinearOpMode {
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
+        // rev hub 1 port 3
+        drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
+
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -63,12 +67,19 @@ public class AutonOfficial extends LinearOpMode {
                 sleep(1500);
                 drivingLibrary.floatStop();
 
+                //reset arm
+                latchArm.setPower(-.75);
+                sleep(5000);
+
                 //drive backwards
                 drivingLibrary.driveStraight(0, -.75f);
                 sleep(3000);
                 drivingLibrary.brakeStop();
 
                 //drop of marker
+                drawerStopServo.setPosition(0.5);
+                intakeExtendArm.setPosition(.7);
+                intakeFlipServo.setPosition(.55);
 
             }
             ranOnce = true;

@@ -24,6 +24,7 @@ public class TeleOpOfficial extends LinearOpMode {
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
+    Servo drawerStopServo;
 
     public void runOpMode() throws InterruptedException {
         // set up our driving library
@@ -46,6 +47,9 @@ public class TeleOpOfficial extends LinearOpMode {
 
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
+
+        // rev hub 1 port 3
+        drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
 
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -89,6 +93,7 @@ public class TeleOpOfficial extends LinearOpMode {
 
             // extend intake arm (winch servo)
             if (gamepad2.dpad_right) {
+
                 intakeExtendArm.setPosition(.7);
             } else if (gamepad2.dpad_left) {
                 intakeExtendArm.setPosition(.2);

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
 @Autonomous
-public class AutonOfficial extends LinearOpMode {
+public class AutonLand extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
     int drivingMode;
@@ -59,23 +59,14 @@ public class AutonOfficial extends LinearOpMode {
                 sleep(7000);
                 latchArm.setPower(0);
 
-                drivingLibrary.driveStraight(0.75f, 0);
-                sleep(1500);
-                drivingLibrary.floatStop();
+                //reset arm
+                latchArm.setPower(-.75);
+                sleep(5000);
 
-                //drive backwards
-                drivingLibrary.driveStraight(0, -.75f);
-                sleep(3000);
-                drivingLibrary.brakeStop();
-
-                //drop of marker
 
             }
             ranOnce = true;
         }
     }
 
-    //land - extend arm, strafe, unextend arm
-
-    //drive to depot, drop marker (possibly sample on the way)
 }

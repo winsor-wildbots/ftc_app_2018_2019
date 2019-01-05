@@ -1,18 +1,18 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous
-public class AutonOfficial extends LinearOpMode {
-
+public class AutonLeft extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;
+
+    ElapsedTime runTime = new ElapsedTime();
 
     // latch arm
     DcMotor latchArm;
@@ -22,6 +22,7 @@ public class AutonOfficial extends LinearOpMode {
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
+    Servo drawerStopServo;
 
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
@@ -44,16 +45,18 @@ public class AutonOfficial extends LinearOpMode {
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
+        // rev hub 1 port 3
+        drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
+
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        boolean ranOnce = false;
+        boolean landed = false;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        while (opModeIsActive()){
-            if (!ranOnce){
+        while (opModeIsActive() && !landed) {
                 //land
                 latchArm.setPower(.75);
                 sleep(7000);
@@ -63,19 +66,32 @@ public class AutonOfficial extends LinearOpMode {
                 sleep(1500);
                 drivingLibrary.floatStop();
 
-                //drive backwards
-                drivingLibrary.driveStraight(0, -.75f);
-                sleep(3000);
-                drivingLibrary.brakeStop();
+                //reset arm
+                latchArm.setPower(-.75);
+                sleep(5000);
 
-                //drop of marker
-
-            }
-            ranOnce = true;
+                landed = true;
         }
+
+        runTime.reset();
+
+        while (opModeIsActive() && runTime.seconds() < 1.0) {
+            //drive backwards
+            drivingLibrary.driveStraight(0, -.75f);
+        }
+
+        while (opModeIsActive() && runTime.seconds() < 3.0) {
+            intakeRotateArm.setPower(0.5);
+        }
+
+        drivingLibrary.brakeStop();
+        intakeRotateArm.setPower(0);
+        drawerStopServo.setPosition(0.5);
+        intakeExtendArm.setPosition(0.5);
     }
 
     //land - extend arm, strafe, unextend arm
 
     //drive to depot, drop marker (possibly sample on the way)
 }
+
