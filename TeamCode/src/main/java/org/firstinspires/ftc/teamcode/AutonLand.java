@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous
+@Autonomous(name = "Landing Only", group = "Both Sides")
 public class AutonLand extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
