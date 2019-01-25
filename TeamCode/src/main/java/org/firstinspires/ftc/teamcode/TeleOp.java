@@ -19,12 +19,13 @@ public class TeleOpOfficial extends LinearOpMode {
     // latch arm
     DcMotor latchArm;
 
-    // intake arm
+    /* // intake arm
     CRServo intakeSpinServo;
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
     Servo drawerStopServo;
+    */
 
     public void runOpMode() throws InterruptedException {
         // set up our driving library
@@ -33,7 +34,7 @@ public class TeleOpOfficial extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
-        // intake cr servo: rev hub 1 servo port 0
+        /* // intake cr servo: rev hub 1 servo port 0
         intakeSpinServo = hardwareMap.get(CRServo.class, "intakeSpinServo");
 
         // intake flip servo: rev hub 1 servo port 1
@@ -44,27 +45,30 @@ public class TeleOpOfficial extends LinearOpMode {
 
         // intake arm rotational dc motor: rev hub 1 motor port 1
         intakeRotateArm = hardwareMap.get(DcMotor.class, "intakeRotateArm");
+        */
 
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
-        // rev hub 1 port 3
+        /* // rev hub 1 port 3
         drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
 
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        */
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        boolean holdA = false;
+        /* boolean holdA = false;
         boolean holdB = false;
+        */
 
 
 
         waitForStart();
 
-        drawerStopServo.setPosition(0.9);
+        // drawerStopServo.setPosition(0.9);
 
         while (opModeIsActive()) {
             // game pad 1: driving and latch
@@ -80,31 +84,31 @@ public class TeleOpOfficial extends LinearOpMode {
             drivingLibrary.driveStraight(gamepad1.left_stick_x, -gamepad1.left_stick_y);
             drivingLibrary.turn(gamepad1.right_stick_x, -gamepad1.right_stick_y);
 
-            // drawer stop off
+            /* // drawer stop off
             if (gamepad1.y) {
                 drawerStopServo.setPosition(.9);
             } else if (gamepad1.x) {
                 drawerStopServo.setPosition(.39);
             }
+            */
 
             // control latch arm
-            if (gamepad1.dpad_up) {
+            if (gamepad2.dpad_up) {
                 latchArm.setPower(-1);
-            } else if (gamepad1.dpad_down) {
+            } else if (gamepad2.dpad_down) {
                 latchArm.setPower(1);
-            } else if (gamepad1.dpad_right) {
+            } else if (gamepad2.dpad_right) {
                 latchArm.setPower(-.5);
-            } else if (gamepad1.dpad_left) {
+            } else if (gamepad2.dpad_left) {
                 latchArm.setPower(.5);
             } else {
                 latchArm.setPower(0);
             }
 
-            // gamepad 2: intake and intake arm
+            /* // gamepad 2: intake and intake arm
 
             // extend intake arm (winch servo)
             if (gamepad2.dpad_right) {
-
                 intakeExtendArm.setPosition(.7);
             } else if (gamepad2.dpad_left) {
                 intakeExtendArm.setPosition(.2);
@@ -149,6 +153,7 @@ public class TeleOpOfficial extends LinearOpMode {
             } else if (gamepad2.x) {
                 intakeFlipServo.setPosition(.3);
             }
+            */
 
             telemetry.addData("Status", "Running");
             telemetry.addData("Brake Mode", drivingLibrary.getMode());
