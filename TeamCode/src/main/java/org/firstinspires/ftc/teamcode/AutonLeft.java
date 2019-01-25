@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "Land and Push Center Mineral", group = "Left Side")
+@Autonomous(name = "Left - Land and Push Center Mineral", group = "Finished")
 public class AutonLeft extends LinearOpMode {
     DrivingLibrary drivingLibrary;
     int drivingMode;

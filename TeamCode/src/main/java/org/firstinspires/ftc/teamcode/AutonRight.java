@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@Autonomous(name = "Land and Push Center Mineral", group = "Right Side")
+@Autonomous(name = "Right - Land and Push Center Mineral", group = "Finished")
 public class AutonRight extends LinearOpMode {
 
     DrivingLibrary drivingLibrary;
