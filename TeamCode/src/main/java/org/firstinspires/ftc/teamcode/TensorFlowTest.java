@@ -128,11 +128,8 @@ public class TensorFlowTest extends LinearOpMode {
                       } else if (nGoldMinerals > 1) {
                           telemetry.addLine("Too Many Gold Minerals Detected");
                       } else {
-                          Recognition r = updatedRecognitions.get(0);
-                          telemetry.addData("Gold Mineral X",
-                                  r.getLeft() + r.getRight() / 2);
-                          telemetry.addData("Gold Mineral Y",
-                                  r.getBottom() + r.getTop() / 2);
+                          Recognition mineral = updatedRecognitions.get(0);
+                          double goldX = (mineral.getLeft() + mineral.getRight()) / 2;
                       }
                       telemetry.update();
                     }

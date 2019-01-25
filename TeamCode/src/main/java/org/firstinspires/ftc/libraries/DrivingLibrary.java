@@ -44,10 +44,18 @@ public class DrivingLibrary {
         this.opMode = opMode;
         hardwareMap = opMode.hardwareMap;
 
-        leftFront = hardwareMap.get(DcMotor.class, "left_front");
-        rightFront = hardwareMap.get(DcMotor.class, "right_front");
-        leftRear = hardwareMap.get(DcMotor.class, "left_rear");
-        rightRear = hardwareMap.get(DcMotor.class, "right_rear");
+        leftFront = hardwareMap.tryGet(DcMotor.class, "leftFront");
+        rightFront = hardwareMap.tryGet(DcMotor.class, "rightFront");
+        leftRear = hardwareMap.tryGet(DcMotor.class, "leftRear");
+        rightRear = hardwareMap.tryGet(DcMotor.class, "rightRear");
+
+        allMotors = new DcMotor[] {leftFront, rightFront, leftRear, rightRear};
+        for (DcMotor motor : allMotors) {
+            if (motor == null) {
+                opMode.telemetry.addLine("Wrong Configuration");
+                opMode.stop();
+            }
+        }
 
         rightRear.setDirection(DcMotor.Direction.REVERSE); //motors face opposite directions so one side is reversed
         rightFront.setDirection(DcMotor.Direction.REVERSE);
@@ -63,7 +71,6 @@ public class DrivingLibrary {
         parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
         imu.initialize(parameters);
 
-        allMotors = new DcMotor[] {leftFront, rightFront, leftRear, rightRear};
         strafeBias = new double[] {1, 1, 1, 1};
     }
 
