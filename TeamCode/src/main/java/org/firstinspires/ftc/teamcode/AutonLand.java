@@ -17,12 +17,13 @@ public class AutonLand extends LinearOpMode {
     // latch arm
     DcMotor latchArm;
 
-    // intake arm
+    /*// intake arm
     CRServo intakeSpinServo;
     Servo intakeFlipServo;
     Servo intakeExtendArm;
     DcMotor intakeRotateArm;
     Servo drawerStopServo;
+    */
 
     public void runOpMode() throws InterruptedException {
         drivingLibrary = new DrivingLibrary(this);
@@ -30,6 +31,7 @@ public class AutonLand extends LinearOpMode {
         drivingMode = 0;
         drivingLibrary.setMode(drivingMode);
 
+        /*
         // intake cr servo: rev hub 1 servo port 0
         intakeSpinServo = hardwareMap.get(CRServo.class, "intakeSpinServo");
 
@@ -41,38 +43,47 @@ public class AutonLand extends LinearOpMode {
 
         // intake arm rotational dc motor: rev hub 1 motor port 1
         intakeRotateArm = hardwareMap.get(DcMotor.class, "intakeRotateArm");
+        */
 
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
 
-        drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
+        // drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");
 
         latchArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        // intakeRotateArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         boolean ranOnce = false;
 
-        drawerStopServo.setPosition(0.9);
+        // drawerStopServo.setPosition(0.9);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        waitForStart();
+
         while (opModeIsActive()){
             if (!ranOnce){
                 //land
-                latchArm.setPower(.75);
-                sleep(7000);
+                latchArm.setPower(-.75);
+                sleep(1000);
                 latchArm.setPower(0);
 
-                drivingLibrary.driveStraight(0.75f, 0);
+                sleep(2000);
+
+                drivingLibrary.driveStraight(0.65f, 0);
                 sleep(500);
-                drivingLibrary.floatStop();
+                drivingLibrary.brakeStop();
+
+                sleep(2000);
 
                 //reset arm
-                latchArm.setPower(-.75);
-                sleep(5000);
+                latchArm.setPower(.75);
+                sleep(1000);
 
-                drawerStopServo.setPosition(0.39);
+                sleep(2000);
+
+                // drawerStopServo.setPosition(0.39);
 
 
             }

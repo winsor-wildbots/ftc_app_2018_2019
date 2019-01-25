@@ -60,6 +60,8 @@ public class AutonLeft extends LinearOpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        waitForStart();
+
         while (opModeIsActive() && !landed) {
                 //land
                 latchArm.setPower(.75);
