@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.enums.DrivingMode;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 
-@TeleOp
+@TeleOp(name = "Test Latch Mech", group = "Test")
 public class TestLatchArm extends LinearOpMode {
     //DrivingLibrary drivingLibrary;
     DcMotor latchArm;

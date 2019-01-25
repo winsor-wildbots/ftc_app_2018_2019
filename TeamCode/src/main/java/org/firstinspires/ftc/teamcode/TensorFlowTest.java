@@ -51,7 +51,7 @@ import java.util.List;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "TensorFlow Object Detection", group = "Test")
+@TeleOp(name = "Test Mineral Detection", group = "Test")
 
 public class TensorFlowTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
@@ -114,29 +114,28 @@ public class TensorFlowTest extends LinearOpMode {
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
                       telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      if (updatedRecognitions.size() == 3) {
-                        int goldMineralX = -1;
-                        int silverMineral1X = -1;
-                        int silverMineral2X = -1;
-                        for (Recognition recognition : updatedRecognitions) {
-                          if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                            goldMineralX = (int) recognition.getLeft();
-                            telemetry.addData("Gold Global Position", recognition.getLeft());
-                          } else if (silverMineral1X == -1) {
-                            silverMineral1X = (int) recognition.getLeft();
-                          } else {
-                            silverMineral2X = (int) recognition.getLeft();
+                      int nGoldMinerals = 0;
+                      int goldMineral = 0;
+
+                      for (Recognition recognition : updatedRecognitions) {
+                          if (recognition.getLabel() == LABEL_GOLD_MINERAL) {
+                              nGoldMinerals++;
                           }
-                        }
-                        if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-                          if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Left");
-                          } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-                            telemetry.addData("Gold Mineral Position", "Right");
-                          } else {
-                            telemetry.addData("Gold Mineral Position", "Center");
-                          }
-                        }
+                      }
+
+                      if (nGoldMinerals == 0) {
+                          telemetry.addLine("No Gold Minerals Detected");
+                      } else if (nGoldMinerals > 1) {
+                          telemetry.addLine("Too Many Gold Minerals Detected");
+                      } else {
+                          telemetry.addData("Gold Mineral Left",
+                                  updatedRecognitions.get(0).getLeft());
+                          telemetry.addData("Gold Mineral Right",
+                                  updatedRecognitions.get(0).getRight());
+                          telemetry.addData("Gold Mineral Top",
+                                  updatedRecognitions.get(0).getTop());
+                          telemetry.addData("Gold Mineral Bottom",
+                                  updatedRecognitions.get(0).getBottom());
                       }
                       telemetry.update();
                     }
