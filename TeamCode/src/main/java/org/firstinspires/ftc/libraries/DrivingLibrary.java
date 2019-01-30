@@ -52,7 +52,8 @@ public class DrivingLibrary {
         allMotors = new DcMotor[] {leftFront, rightFront, leftRear, rightRear};
         for (DcMotor motor : allMotors) {
             if (motor == null) {
-                opMode.telemetry.addLine("Wrong Configuration");
+                opMode.telemetry.addLine("Wrong configuration");
+                opMode.telemetry.update();
                 opMode.stop();
             }
         }
