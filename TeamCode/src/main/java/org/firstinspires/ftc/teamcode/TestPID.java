@@ -6,7 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.libraries.DrivingLibrary;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
+import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+
+import java.util.List;
 
 /**
  * Created by lamanwyner on 1/25/19.
@@ -35,6 +38,52 @@ public class TestPID extends LinearOpMode {
         }
 
         drivingLibrary = new DrivingLibrary(this);
+
+        double P = 1;
+
+        waitForStart();
+
+        if (opModeIsActive()) {
+            /** Activate Tensor Flow Object Detection. */
+            if (tfod != null) {
+                tfod.activate();
+            }
+
+            while (opModeIsActive()) {
+                if (tfod != null) {
+                    // getUpdatedRecognitions() will return null if no new information is available since
+                    // the last time that call was made.
+                    List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+                    if (updatedRecognitions != null) {
+                        telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        int nGoldMinerals = 0;
+                        double goldX = 0;
+
+                        for (Recognition recognition : updatedRecognitions) {
+                            if (recognition.getLabel() == LABEL_GOLD_MINERAL) {
+                                nGoldMinerals++;
+                            }
+                        }
+
+                        if (nGoldMinerals == 0) {
+                            telemetry.addLine("No Gold Minerals Detected");
+                        } else if (nGoldMinerals > 1) {
+                            telemetry.addLine("Too Many Gold Minerals Detected");
+                        } else {
+                            Recognition mineral = updatedRecognitions.get(0);
+                            goldX = (mineral.getLeft() + mineral.getRight()) / 2;
+
+                            drivingLibrary.turn();
+                        }
+                        telemetry.update();
+                    }
+                }
+            }
+        }
+
+        if (tfod != null) {
+            tfod.shutdown();
+        }
     }
 
     private void initVuforia() {
