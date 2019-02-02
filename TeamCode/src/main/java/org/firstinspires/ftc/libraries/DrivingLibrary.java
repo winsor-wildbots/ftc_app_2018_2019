@@ -17,6 +17,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
+import java.util.Arrays;
+
 public class DrivingLibrary {
     // hardware variables
     private DcMotor leftFront;
@@ -167,6 +169,11 @@ public class DrivingLibrary {
         for (DcMotor motor : allMotors) {
             motor.setPower(speed);
         } //physically sets motor speed
+    }
+
+    public String getMotorPower() {
+        double[] powers = new double[] {leftFront.getPower(), leftRear.getPower(), rightFront.getPower(), rightRear.getPower()};
+        return Arrays.toString(powers);
     }
 
     public void stopDrivingMotors() {
