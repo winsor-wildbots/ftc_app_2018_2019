@@ -15,9 +15,11 @@ public class TestIntake extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+            //turn on intake
             if (gamepad1.a) {
                 testIntake.setPower(-.5);
             }
+            //turn off intake
             if (gamepad1.b){
                 testIntake.setPower(0);
             }
