@@ -65,7 +65,7 @@ public class AutonLand extends LinearOpMode {
         while (opModeIsActive()){
             if (!ranOnce){
                 //land
-                latchArm.setPower(-.75);
+                latchArm.setPower(-1);
                 sleep(1000);
                 latchArm.setPower(0);
 
@@ -78,7 +78,7 @@ public class AutonLand extends LinearOpMode {
                 sleep(2000);
 
                 //reset arm
-                latchArm.setPower(.75);
+                latchArm.setPower(1);
                 sleep(1000);
 
                 sleep(2000);
