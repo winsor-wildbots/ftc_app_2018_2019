@@ -16,6 +16,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.Velocity;
 
 import java.util.Arrays;
 
@@ -120,6 +122,14 @@ public class DrivingLibrary {
         leftRear.setPower((y + x) * speedSetting * multiplier * strafeBias[1]);
         rightFront.setPower((y - x) * speedSetting * multiplier * strafeBias[2]);
         rightRear.setPower((y - x) * speedSetting * multiplier * strafeBias[3]);
+    }
+
+    public void turn(double radians) {
+        double k = 1;
+
+        imu.startAccelerationIntegration(new Position(), new Velocity(), 500);
+
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.RADIANS);
     }
 
     public void setSpeed(double speed) {
