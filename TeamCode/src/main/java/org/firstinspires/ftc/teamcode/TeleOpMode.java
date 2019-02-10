@@ -17,6 +17,8 @@ public class TeleOpMode extends LinearOpMode {
     // latch arm
     DcMotor latchArm;
 
+    DcMotor testIntake;
+
     /* // intake arm
     CRServo intakeSpinServo;
     Servo intakeFlipServo;
@@ -47,6 +49,17 @@ public class TeleOpMode extends LinearOpMode {
 
         // latch motor: rev hub 1 motor port 0
         latchArm = hardwareMap.get(DcMotor.class, "latchArm");
+
+        testIntake = hardwareMap.get(DcMotor.class, "testIntake");
+
+        //turn on intake forwards? (idk which direction is which)
+        if (gamepad2.a) {
+            testIntake.setPower(-.5);
+        }
+        //turn off intake
+        if (gamepad2.b){
+            testIntake.setPower(0);
+        }
 
         /* // rev hub 1 port 3
         drawerStopServo = hardwareMap.get(Servo.class, "drawerStopServo");

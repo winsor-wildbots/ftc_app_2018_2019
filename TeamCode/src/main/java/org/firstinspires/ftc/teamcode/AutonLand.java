@@ -65,23 +65,23 @@ public class AutonLand extends LinearOpMode {
         while (opModeIsActive()){
             if (!ranOnce){
                 //land
-                latchArm.setPower(-1);
-                sleep(1000);
-                latchArm.setPower(0);
+                latchArm.setPower(1);
+                sleep(28000);
 
-                sleep(2000);
+                sleep(100);
 
-                drivingLibrary.driveStraight(0.65f, 0);
+                drivingLibrary.turn(.5f,.5f);
                 sleep(500);
                 drivingLibrary.brakeStop();
 
-                sleep(2000);
+                //sleep(2000);
 
-                //reset arm
+                /* //reset arm
                 latchArm.setPower(1);
                 sleep(1000);
 
                 sleep(2000);
+                 */
 
                 // drawerStopServo.setPosition(0.39);
 
